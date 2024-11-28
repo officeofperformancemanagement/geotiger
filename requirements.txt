@@ -1,0 +1,3 @@
+geopandas
+fiona==1.9.6
+pyarrow

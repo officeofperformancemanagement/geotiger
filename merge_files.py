@@ -1,18 +1,15 @@
-# pip install geopandas
-# pip install fiona==1.9.6
-# pip install pyarrow
 from glob import glob
 
-import geopandas as gp
+import geopandas
 import pandas as pd
 
 joined = None
 for i, filepath in enumerate(glob("./data/*.shp")):
-  print("reading " + filepath)
-  gdf = gp.read_file(filepath, driver="shapefile")
+  print(i, ": reading " + filepath)
+  gdf = geopandas.read_file(filepath, driver="shapefile")
   if i == 0:
     joined = gdf
   else:
     joined = pd.concat([joined, gdf])
 
-gdf.to_parquet("tl_2022_us_tabblock20.parquet")
+joined.to_parquet("tl_2022_us_tabblock20.parquet")
