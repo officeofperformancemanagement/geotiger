@@ -3,13 +3,25 @@ from glob import glob
 import geopandas
 import pandas as pd
 
-joined = None
-for i, filepath in enumerate(glob("./data/*.shp")):
+
+blockgroups = None
+for i, filepath in enumerate(glob("./data/*bg.shp")):
   print(i, ": reading " + filepath)
   gdf = geopandas.read_file(filepath, driver="shapefile")
   if i == 0:
-    joined = gdf
+    blockgroups = gdf
   else:
-    joined = pd.concat([joined, gdf])
+    blockgroups = pd.concat([blockgroups, gdf])
 
-joined.to_parquet("tl_2022_us_tabblock20.parquet")
+blockgroups.to_parquet("tl_2022_us_bg.parquet")
+
+blocks = None
+for i, filepath in enumerate(glob("./data/*tabblock20.shp")):
+  print(i, ": reading " + filepath)
+  gdf = geopandas.read_file(filepath, driver="shapefile")
+  if i == 0:
+    blocks = gdf
+  else:
+    blocks = pd.concat([blocks, gdf])
+
+blocks.to_parquet("tl_2022_us_tabblock20.parquet")

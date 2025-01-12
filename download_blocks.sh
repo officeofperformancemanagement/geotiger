@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+# download blocks
 files=$(curl "https://www2.census.gov/geo/tiger/TIGER2022/TABBLOCK20/" | grep --only-matching "tl_2022_[[:digit:]][[:digit:]]_tabblock20.zip" | uniq)
 
 i=0
